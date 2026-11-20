@@ -10,16 +10,17 @@
 
 | 项目 | 值 |
 |---|---|
-| 机型 | Minisforum UM790 Pro（迷你主机，无电池） |
-| CPU | AMD Ryzen 9 7940HS（Zen4 Phoenix，8C/16T） |
-| iGPU | AMD Radeon 780M，GCN RDNA3 `gfx1103`，Device ID `0x15bf` / `0x15bf1002` |
-| 内存 | 64 GB（从 EFI 注入 16GB 显存预算） |
-|网卡 | Intel AX1675x（AX210 系列，CNVi 除外）— itlwm / ForbiddenItlwm |
-| 有线 | Realtek RTL8125 — RTL812xLucy |
+| 机型 | MINISFORUM UM790 Pro（迷你主机，AMD Phoenix 平台，无电池、无独显） |
+| CPU | AMD Ryzen 9 7940HS（Zen4 Phoenix，8 核 16 线程，TDP 45W） |
+| iGPU | AMD Radeon 780M，RDNA3 `gfx1103`，Device ID `0x15bf` / `0x15bf1002`，12 CU |
+| 显存 | 从 EFI 注入 16 GB 统一内存预算；系统显示 VRAM 8 GB |
+| 内存 | 64 GB |
+| 无线 | Intel AX1675x（AX210 系列，非 CNVi）— itlwm / ForbiddenItlwm + IntelBluetoothFirmware |
+| 有线 | Realtek RTL8125（2.5G）— RTL812xLucy |
 | 系统 | macOS Tahoe 26.7.3（25G342） |
-| SMBIOS | `MacPro7,1`（软件解码器 + 无电池台式机语义） |
+| SMBIOS | `MacPro7,1`（软件解码 + 无电池台式机语义，避免笔记本唤醒/电池报错） |
 
-已验证可用：Metal 3、M2/Liquid Glass 玻璃效果、隔空投送 AirDrop、Wi‑Fi、蓝牙、HiDPI、CPU 名称正确显示、CPPC 温控降噪。
+已验证可用：Metal 3、M2/Liquid Glass 玻璃效果、隔空投送 AirDrop、Wi‑Fi、蓝牙、HiDPI、CPU 名称正确显示、CPPC 温控降噪。效果图与验收截图见 [`evidence/`](evidence/)（后续补充）。
 
 ---
 
