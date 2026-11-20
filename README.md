@@ -13,7 +13,7 @@
 | 机型 | MINISFORUM UM790 Pro（迷你主机，AMD Phoenix 平台，无电池、无独显） |
 | CPU | AMD Ryzen 9 7940HS（Zen4 Phoenix，8 核 16 线程，TDP 45W） |
 | iGPU | AMD Radeon 780M，RDNA3 `gfx1103`，Device ID `0x15bf` / `0x15bf1002`，12 CU |
-| 显存 | 从 EFI 注入 16 GB 统一内存预算；系统显示 VRAM 8 GB |
+| 显存 | 从 BIOS 手动设置 8 GB；系统显示 VRAM 8 GB |
 | 内存 | 64 GB |
 | 无线 | Intel AX1675x（AX210 系列，非 CNVi）— itlwm / ForbiddenItlwm + IntelBluetoothFirmware |
 | 有线 | Realtek RTL8125（2.5G）— RTL812xLucy |
