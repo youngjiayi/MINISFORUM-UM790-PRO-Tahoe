@@ -1,0 +1,24 @@
+# 第三方二进制不进仓库（只保留出处和校验值，见 README）
+efi/OC/Kexts/
+efi/OC/Drivers/
+efi/OC/OpenCore.efi
+efi/OC/Tools/
+efi/OC/Resources/
+efi/BOOT/
+*.kext
+*.efi
+
+# macOS 垃圾文件 / 备份 / 含真实 SMBIOS 的历史 config
+.DS_Store
+*.bak
+*.bak-*
+config.plist.bak-*
+*.dmg
+*.zip
+*.log
+
+# 本地私有资料
+*.txt
+private/
+*.p12
+*.pem
