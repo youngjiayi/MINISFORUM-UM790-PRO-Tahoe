@@ -2,7 +2,7 @@
 
 一台 **UM790 Pro 迷你主机**（Zen4 Phoenix / 7940HS / Radeon 780M 1002:15BF）跑通 macOS Tahoe 的完整配置：OpenCore 引导、780M 的 Metal 3 硬件加速、M2 Liquid Glass 桌面合成、Wi‑Fi / 蓝牙 / AirDrop、CPU 降频静音，以及一整套 NVRAM 取巧。
 
-> **本仓库是脱敏后的公开版**：SMBIOS 序列号 / MLB / UUID / ROM(MAC) 已全部替换为占位值，请用 GenSMBIOS 生成你自己的。第三方二进制（OpenCore、kext、driver、nullarc 驱动）**不在仓库内**，只给出出处与 SHA‑256 校验值；ACPI 的 `.aml` 是本机私有表，随仓库提供。
+> **本仓库是脱敏后的公开版**：SMBIOS 序列号 / MLB / UUID / ROM(MAC) 已全部替换为占位值，请用 GenSMBIOS 生成你自己的。整套 EFI 已随仓库提供（OpenCore、kext、driver、ACPI `.aml`），clone 后替换 SMBIOS 即可用；各组件的出处与 SHA‑256 校验值见第 5 节，便于你核对或自行更新到最新版。
 
 ---
 
@@ -54,7 +54,7 @@ nullarc 的 `PhxAccel` 原生只认 `0x1900`，需给 Info.plist 补 `0x15bf1002
 ## 3. 复现步骤
 
 1. 用 GenSMBIOS 为 `MacPro7,1` 生成**你自己的** Serial / MLB / UUID，ROM 填你有线网卡 MAC。
-2. 按第 5 节的出处表下载各 kext / driver / OpenCore（或用你熟悉的 OpenCore 版本），核对 SHA‑256。
+2. 仓库已带整套 kext / driver / OpenCore，可用第 5 节的 SHA‑256 核对是否完整；若要用更新版本，按出处表替换对应组件。
 3. 把本仓库 `efi/OC/config.plist` 的占位符替换为你的值；确认 `NVRAM → Add` 里 `phxfb-boot = MDE=` 在、`Delete` 里没有它。
 4. 按 nullarc 文档安装 GPU 驱动（`install.sh --check` / `--windowserver`），并给 `PhxAccel` / `NMXAccel` 的 Info.plist 补 `0x15bf1002`。
 5. 打开自动登录（登录窗在 M2 下可能黑屏），重启两次：第一次自检并 arm，第二次接管。
@@ -75,7 +75,7 @@ tail -5 /var/log/phxboot.log                     # done / armed and released
 
 ## 5. 组件出处与校验值
 
-第三方二进制不随仓库分发，请从下列出处获取并用 SHA‑256 核对。
+第三方二进制已随仓库提供（`efi/OC/Kexts/`、`efi/OC/Drivers/`、`OpenCore.efi`、`BOOT/BOOTx64.efi`），下表给出出处与 SHA‑256，便于你核对完整性或自行更新到更新版本。这些组件版权归各自作者，请遵守其许可。
 
 ### OpenCore / drivers
 | 文件 | 出处 | SHA‑256 |
@@ -88,7 +88,7 @@ tail -5 /var/log/phxboot.log                     # done / armed and released
 | ResetNvramEntry.efi | Acidanthera/OpenCorePkg | `5217eff381595ecd1a642d735c4179870c69a72c1302cc38279e034d4bc0a95f` |
 | apfs_aligned.efi | Acidanthera/OpenCorePkg | `1663fa54103cf808b45fda3f0385626d1f1899a9ed8258d21a827db4426ed408` |
 
-### Kexts（22 个）
+### Kexts（23 个）
 | Kext | 出处 | SHA‑256 |
 |---|---|---|
 | AMFIPass.kext | dhinakg/AMFIPass | `7261dc4513223c69003354120f2a674b07c68e7d952021f056959623853b3f21` |

@@ -1,12 +1,5 @@
-# 第三方二进制不进仓库（只保留出处和校验值，见 README）
-efi/OC/Kexts/
-efi/OC/Drivers/
-efi/OC/OpenCore.efi
-efi/OC/Tools/
-efi/OC/Resources/
-efi/BOOT/
-*.kext
-*.efi
+# 第三方二进制（Kexts/Drivers/OpenCore.efi/BOOT）已随仓库提供，便于开箱即用。
+# 出处与 SHA-256 校验值见 README 第 5 节。
 
 # macOS 垃圾文件 / 备份 / 含真实 SMBIOS 的历史 config
 .DS_Store
