@@ -119,11 +119,13 @@ tail -5 /var/log/phxboot.log                     # done / armed and released
 
 ### 关键 boot-args
 ```
--v debug=0x100 keepsyms=1 -amfipassbeta -ibtcompatbeta revpatch=sbvmm,cpuname
+keepsyms=1 -amfipassbeta -ibtcompatbeta revpatch=sbvmm,cpuname
 ipc_control_port_options=0 -nohe phxkick=0 wujiexhci=1
 amfi=0x80 amfi_get_out_of_my_way=0x1 phxdebug=1
 -btleadv ... (itlwm 蓝牙共存调优若干)
 ```
+
+> 启动参数刻意**不加 `-v`、`debug=0x100`**，配合 `Misc → Debug → Target=1`、`AppleDebug=false`、`LogModules=""`：不写 OpenCore 日志到 ESP、panic 自动重启，实测 SSH 就绪时间 45–55s → ~30s。保留 `keepsyms=1` 仍可在 panic 时看栈；排查开机问题时可临时把 `-v` 加回去。
 
 ---
 
