@@ -17,3 +17,4 @@
 - 放进来后在本 README 里补一句图注即可
 
 > 当前目录暂无图片。截图由机器主人后续补充并单独提交（本地环境无屏幕录制权限，无法代为截取）。
+<img width="3024" height="1686" alt="20261118195432_355_411" src="https://github.com/user-attachments/assets/2316c024-4c42-4b61-8ac8-07d84615ee72" />
