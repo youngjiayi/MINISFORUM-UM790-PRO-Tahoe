@@ -1,5 +1,8 @@
-# 第三方二进制（Kexts/Drivers/OpenCore.efi/BOOT）已随仓库提供，便于开箱即用。
-# 出处与 SHA-256 校验值见 README 第 5 节。
+# 第三方二进制不进仓库（只保留本机自编译的 PhxBringup / PhxCPPC）。
+# 其余 kext / driver / OpenCore 的出处与 SHA-256 见 README 第 5 节。
+efi/OC/Drivers/
+efi/OC/OpenCore.efi
+efi/BOOT/
 
 # macOS 垃圾文件 / 备份 / 含真实 SMBIOS 的历史 config
 .DS_Store

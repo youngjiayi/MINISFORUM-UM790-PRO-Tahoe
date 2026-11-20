@@ -2,7 +2,7 @@
 
 一台 **UM790 Pro 迷你主机**（Zen4 Phoenix / 7940HS / Radeon 780M 1002:15BF）跑通 macOS Tahoe 的完整配置：OpenCore 引导、780M 的 Metal 3 硬件加速、M2 Liquid Glass 桌面合成、Wi‑Fi / 蓝牙 / AirDrop、CPU 降频静音，以及一整套 NVRAM 取巧。
 
-> **本仓库是脱敏后的公开版**：SMBIOS 序列号 / MLB / UUID / ROM(MAC) 已全部替换为占位值，请用 GenSMBIOS 生成你自己的。整套 EFI 已随仓库提供（OpenCore、kext、driver、ACPI `.aml`），clone 后替换 SMBIOS 即可用；各组件的出处与 SHA‑256 校验值见第 5 节，便于你核对或自行更新到最新版。
+> **本仓库是脱敏后的公开版**：SMBIOS 序列号 / MLB / UUID / ROM(MAC) 已全部替换为占位值，请用 GenSMBIOS 生成你自己的。随仓库提供的是脱敏 config、私有 ACPI `.aml`、以及本机自编译的两个 kext（`PhxBringup` / `PhxCPPC`）。其余第三方 kext / driver / OpenCore **不在仓库内**，只给出处与 SHA‑256 校验值——原因是这些组件版权归各自作者、部分许可限制再分发（尤其 nullarc 派生的加速驱动为 PolyForm Noncommercial，仅非商业用途），请自行从原项目获取并遵守其许可。
 
 ---
 
@@ -54,7 +54,7 @@ nullarc 的 `PhxAccel` 原生只认 `0x1900`，需给 Info.plist 补 `0x15bf1002
 ## 3. 复现步骤
 
 1. 用 GenSMBIOS 为 `MacPro7,1` 生成**你自己的** Serial / MLB / UUID，ROM 填你有线网卡 MAC。
-2. 仓库已带整套 kext / driver / OpenCore，可用第 5 节的 SHA‑256 核对是否完整；若要用更新版本，按出处表替换对应组件。
+2. 按第 5 节的出处表下载其余 kext / driver / OpenCore，用 SHA‑256 核对；本机自编译的 `PhxBringup` / `PhxCPPC` 已随仓库提供，直接放入 `EFI/OC/Kexts/` 即可。
 3. 把本仓库 `efi/OC/config.plist` 的占位符替换为你的值；确认 `NVRAM → Add` 里 `phxfb-boot = MDE=` 在、`Delete` 里没有它。
 4. 按 nullarc 文档安装 GPU 驱动（`install.sh --check` / `--windowserver`），并给 `PhxAccel` / `NMXAccel` 的 Info.plist 补 `0x15bf1002`。
 5. 打开自动登录（登录窗在 M2 下可能黑屏），重启两次：第一次自检并 arm，第二次接管。
@@ -75,7 +75,7 @@ tail -5 /var/log/phxboot.log                     # done / armed and released
 
 ## 5. 组件出处与校验值
 
-第三方二进制已随仓库提供（`efi/OC/Kexts/`、`efi/OC/Drivers/`、`OpenCore.efi`、`BOOT/BOOTx64.efi`），下表给出出处与 SHA‑256，便于你核对完整性或自行更新到更新版本。这些组件版权归各自作者，请遵守其许可。
+下表列出整套 EFI 用到的第三方组件出处与 SHA‑256。除本机自编译的 `PhxBringup` / `PhxCPPC` 已随仓库提供外，其余均需你从原项目获取。版权归各自作者，请遵守其许可；表中标注了本机自编译项与官方包哈希不同。
 
 ### OpenCore / drivers
 | 文件 | 出处 | SHA‑256 |
@@ -102,8 +102,8 @@ tail -5 /var/log/phxboot.log                     # done / armed and released
 | IntelBluetoothFirmware.kext | zxystd/IntelBluetoothFirmware | `665bf22ad5f2345fb9001c2bcc9ecbc1d6057cbcaaccefa00e38590b5575973c` |
 | Lilu.kext | Acidanthera/Lilu | `232ce93a96d9b97ec18161172940f141317ec0179fa27c9841f84bd66fa99dab` |
 | NVMeFix.kext | Acidanthera/NVMeFix | `cef734775c1b11f15bd8be9ff6c98db2f03b42f0b4bde37ca544b4a8d642793e` |
-| PhxBringup.kext | nullarc（本机 15BF 编译版） | `b1daab6ba43887d3fd27ed6ff64fb6ed4b09b7ff72008d204821d551ebcf911e` |
-| PhxCPPC.kext | nullarc issue #21（Zen4 CPU 降频） | `5477a6ea6be48d0f1fbd529c4583f6313258a4ab97332d5b6c409036a55a81b4` |
+| **PhxBringup.kext** ✅随仓库 | nullarc 源码本机 15BF 编译版（非官方 0x1900 版，勿覆盖） | 二进制 `bb1389d7d93b17543454ab9fa7c90aa128e1086a344ba58ffa12a927974de820` |
+| **PhxCPPC.kext** ✅随仓库 | nullarc issue #21 源码本机编译（Zen4 CPU 降频） | 二进制 `18bf10f1144adc0225c83829fe74ba0132aa8ffc978af82f64f1dd42079b5760` |
 | PhxXhciKick.kext | phx / mechrevo 参考机 | `7a45accce13d23eae3f7b6d2bc9c5ad4bcee8b1e1e35bd25d2f2efee0c5d58d9` |
 | RTL812xLucy.kext | Mieze/RTL8125Ethernet (Lucy fork) | `7490ef2099f6edb4f771c08899a3932ad33d976dd03830ba49e1a632299b1c22` |
 | RestrictEvents.kext | Acidanthera/RestrictEvents | `b2cf92f78ff82f765d6238638352933edd4b6f9ad49059b3ceb6177bd273e5dc` |
@@ -144,7 +144,8 @@ M2 内置看门狗：WindowServer 崩 2 次自动重启、3 次退回 headless�
 ## 7. 脱敏与许可
 
 - SMBIOS（Serial / MLB / UUID）与 ROM(MAC) 在 config 中为占位符 / 全零；请用 GenSMBIOS 生成你自己的，否则可能与他人冲突导致 iMessage / iCloud 异常。
-- 第三方组件版权归各自作者，见上方出处表；本仓库自有文字与配置以 **MIT** 发布。
+- 本仓库只随附**本机自编译**的 `PhxBringup` / `PhxCPPC`（源码来自 nullarc，对应部分为 MIT / GPL‑2.0‑only）；其余第三方组件不分发，版权归各自作者，见上方出处表。本仓库自有文字与配置以 **MIT** 发布。
+- **关于 nullarc GPU 驱动**：`PhxAccel` / `NMXAccel` 等派生自 NullMoth 驱动，采用 **PolyForm Noncommercial 1.0.0（仅非商业用途）**，故不在本仓库分发——请从 [luuumi-dev/nullarc](https://github.com/luuumi-dev/nullarc) 按原许可自行获取；原始 Required Notice：Copyright (c) 2026 NullMoth Systems。
 - 仅供学习研究；黑苹果与实验性 GPU 驱动有损坏系统 / 数据风险，操作前做好备份。
 
 ## 8. 致谢
